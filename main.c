@@ -3,15 +3,15 @@
 #include "game.h"
 #include "score.h"
 
-// FunÁ„o do menu
+// Fun√ß√£o do menu
 void displayMenu() {
     int choice;
     do {
         printf("\n--- Jogo de Labirinto ---\n");
         printf("1. Iniciar Jogo\n");
-        printf("2. EstatÌsticas\n");
+        printf("2. Pontua√ß√µes\n");
         printf("3. Sair\n");
-        printf("Escolha uma opÁ„o: ");
+        printf("Escolha uma op√ß√£o: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -19,15 +19,15 @@ void displayMenu() {
                 startGame();  
                 break;
             case 2:
-                displayStats(); // Exibir as estatÌsticas
+                displayStats(); // Exibir as Pontua√ß√µes 
                 break;
             case 3:
-                printf("Saindo do jogo. AtÈ logo!\n");
+                printf("Saindo do jogo. At√© logo!\n");
                 break;
             default:
-                printf("OpÁ„o inv·lida. Tente novamente.\n");
+                printf("Op√ß√£o inv√°lida. Tente novamente.\n");
         }
-    } while (choice != 3); // Repete atÈ o jogador escolher sair
+    } while (choice != 3); // Repete at√© o jogador escolher sair
 }
 
 int main() {
