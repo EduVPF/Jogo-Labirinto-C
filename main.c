@@ -27,10 +27,10 @@ void displayMenu() {
             default:
                 printf("Opção inválida. Tente novamente.\n");
         }
-    } while (choice != 3); // Repete até o jogador escolher sair
+    } while (choice != 3); 
 }
 
 int main() {
-    displayMenu(); // Exibe o menu principal
+    displayMenu(); 
     return 0;
 }
