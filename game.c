@@ -11,7 +11,7 @@
 void initializeBoard(int **board) {
     for (int i = 0; i < MAX_LINHAS; i++) {
         for (int j = 0; j < MAX_COLUNAS; j++) {
-            board[i][j] = 0; // Espaço vazio
+            board[i][j] = 0; 
         }
     }
 
@@ -19,7 +19,7 @@ void initializeBoard(int **board) {
     for (int i = 0; i < MAX_LINHAS; i++) {
         for (int j = 0; j < MAX_COLUNAS; j++) {
             if (i == 0 || i == MAX_LINHAS - 1 || j == 0 || j == MAX_COLUNAS - 1) {
-                board[i][j] = 1; // Paredes
+                board[i][j] = 1; 
             }
         }
     }
@@ -29,7 +29,7 @@ void loadPhase(int phase, int **board) {
     FILE *file;
     char filename[20];
 
-    // Lê o nome do arquivo da fase de forma dinâmica
+    // LÃª o nome do arquivo da fase
     snprintf(filename, sizeof(filename), "fase%d.txt", phase);
     file = fopen(filename, "r");
 
@@ -47,23 +47,23 @@ void loadPhase(int phase, int **board) {
     fclose(file);
 }
 
-// Função para posicionar o jogador em um espaço válido.
+// FunÃ§Ã£o para posicionar o jogador em um espaÃ§o vÃ¡lido.
 void positionPlayer(int **board, Player *player) {
     int validPositionFound = 0;
     while (!validPositionFound) {
         int x = rand() % (MAX_LINHAS - 2) + 1;
         int y = rand() % (MAX_COLUNAS - 2) + 1;
 
-        if (board[x][y] == 0) { // Se for um espaço vazio (0), vai colocar o jogador
+        if (board[x][y] == 0) {  
             player->x = x;
             player->y = y;
             validPositionFound = 1;
         }
     }
 }
-// Função para colocar a saída em uma posição aleatória nas bordas que seja um (0)
+// FunÃ§Ã£o para colocar a saÃ­da em uma posiÃ§Ã£o aleatÃ³ria nas bordas que seja um (0)
 void positionExit(int **board) {
-    int validPositions[MAX_LINHAS + MAX_COLUNAS * 2][2]; // Array para armazenar posições válidas nas bordas
+    int validPositions[MAX_LINHAS + MAX_COLUNAS * 2][2]; // Array para armazenar posiÃ§Ãµes vÃ¡lidas nas bordas
     int count = 0;
 
     // Verifica a borda superior
@@ -102,17 +102,17 @@ void positionExit(int **board) {
         }
     }
 
-    // Se houver posições válidas, escolhe uma aleatoriamente
+    // Se houver posiÃ§Ãµes vÃ¡lidas, escolhe uma aleatoriamente
     if (count > 0) {
         int randomIndex = rand() % count; 
         int x = validPositions[randomIndex][0];
         int y = validPositions[randomIndex][1];
         board[x][y] = 2; 
     } else {
-        printf("Erro: Não há posições válidas nas bordas para colocar a saída.\n");
+        printf("Erro: NÃ£o hÃ¡ posiÃ§Ãµes vÃ¡lidas nas bordas para colocar a saÃ­da.\n");
     }
 }
-// Função para imprimir o tabuleiro
+// FunÃ§Ã£o para imprimir o tabuleiro
 void printBoard(int **board, Player player, int stepsLeft) {
     printf("\nPassos restantes: %d\n", stepsLeft);
     printf("Score: %d\n", player.score);
@@ -121,18 +121,18 @@ void printBoard(int **board, Player player, int stepsLeft) {
             if (i == player.x && j == player.y) {
                 printf("J  "); // Jogador
             } else if (board[i][j] == 0) {
-                printf("-  "); // Espaço vazio
+                printf("-  "); // EspaÃ§o vazio
             } else if (board[i][j] == 1) {
                 printf("|  "); // Paredes
             } else if (board[i][j] == 2) {
-                printf("S  "); // Saída
+                printf("S  "); // SaÃ­da
             }
         }
         printf("\n");
     }
 }
 
-// Função para mover o jogador
+// FunÃ§Ã£o para mover o jogador
 int moverPlayer(int **board, Player *player, char move) {
     int newX = player->x;
     int newY = player->y;
@@ -143,21 +143,21 @@ int moverPlayer(int **board, Player *player, char move) {
     else if (move == 'a') newY--; // Esquerda
     else if (move == 'd') newY++; // Direita
 
-    // Verifica se o movimento não sai dos limites e não colide com as paredes
+    // Verifica se o movimento nÃ£o sai dos limites e nÃ£o colide com as paredes
     if (newX >= 0 && newX < MAX_LINHAS && newY >= 0 && newY < MAX_COLUNAS && board[newX][newY] != 1) {
         player->x = newX;
         player->y = newY;
 
-        // Verifica se o jogador chegou à saída
+        // Verifica se o jogador chegou Ã  saÃ­da
         if (board[player->x][player->y] == 2) {
-            return 1; // Chegou à saída
+            return 1; // Chegou Ã  saÃ­da
         }
     }
 
-    return 0; // Não chegou ainda
+    return 0; // NÃ£o chegou ainda
 }
 
-// Função para começar o jogo com limite de passos
+// FunÃ§Ã£o para comeÃ§ar o jogo com limite de passos
 void startGame() {
     int **board;
     board = (int **)malloc(MAX_LINHAS * sizeof(int *));
@@ -165,13 +165,13 @@ void startGame() {
         board[i] = (int *)malloc(MAX_COLUNAS * sizeof(int));
     }
 
-    Player player = {0, 0, 0}; // Jogador começa na posição (0, 0)
+    Player player = {0, 0, 0}; // Jogador comeÃ§a na posiÃ§Ã£o (0, 0)
     int phase = 1;
     char move;
     int levelComplete;
     int stepsLeft;
 
-    // A cada fase, o jogador passa para a próxima fase após atingir a saída
+    // A cada fase, o jogador passa para a prÃ³xima fase apÃ³s atingir a saÃ­da
     while (phase <= NUM_PHASES) {
         initializeBoard(board); // Inicializa o tabuleiro
         loadPhase(phase, board); // Carrega a fase
@@ -180,7 +180,7 @@ void startGame() {
         // Define o limite de passos para cada fase (agora 30 passos para cada fase)
         stepsLeft = 30;
 
-        // Posiciona a saída de forma válida
+        // Posiciona a saÃ­da de forma vÃ¡lida
         positionExit(board);
 
         levelComplete = 0;
@@ -196,16 +196,16 @@ void startGame() {
 
             // Se o jogador esgotar os passos, ele perde a fase
             if (stepsLeft <= 0) {
-                printf("Você ficou sem passos! Você perdeu a fase %d!\n", phase);
+                printf("VocÃª ficou sem passos! VocÃª perdeu a fase %d!\n", phase);
                 levelComplete = -1; // Perde a fase
                 break;
             }
 
             if (levelComplete) {
-                printf("Você completou a fase %d!\n", phase);
-                player.score += 100; // Pontuação por completar a fase
-                phase++; // Avança para a próxima fase
-                break; // Sai do loop interno para iniciar a próxima fase
+                printf("VocÃª completou a fase %d!\n", phase);
+                player.score += 100; // PontuaÃ§Ã£o por completar a fase
+                phase++; // AvanÃ§a para a prÃ³xima fase
+                break; // Sai do loop interno para iniciar a prÃ³xima fase
             }
         }
 
@@ -215,10 +215,10 @@ void startGame() {
     }
 
     // Final do jogo
-    printf("Jogo Finalizado! Pontuação Final: %d\n", player.score);
+    printf("Jogo Finalizado! PontuaÃ§Ã£o Final: %d\n", player.score);
     saveScore(player.score); // Salva o placar
 
-    // Libera a memória
+    // Libera a memÃ³ria
     for (int i = 0; i < MAX_LINHAS; i++) {
         free(board[i]);
     }
